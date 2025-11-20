@@ -1,0 +1,17 @@
+cache/
+out/
+node_modules/
+broadcast/
+.env
+.DS_Store
+
+src/answer/*.sol
+src/quiz/answer/*.sol
+test/answer/*.sol
+test/quiz/*.sol
+test/quiz/answer/
+
+lib/
+
+
+*.md
