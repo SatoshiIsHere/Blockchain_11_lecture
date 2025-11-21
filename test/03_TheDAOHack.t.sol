@@ -46,12 +46,12 @@ contract TheDAOHackTest is Test {
     
     function testReentrancyAttack() public {
         vm.prank(user1);
-        dao.deposit{value: 50 ether}();
+        dao.deposit{value: 10 ether}();
         
         vm.prank(user2);
-        dao.deposit{value: 50 ether}();
+        dao.deposit{value: 10 ether}();
         
-        assertEq(dao.getContractBalance(), 100 ether);
+        assertEq(dao.getContractBalance(), 20 ether);
         
         vm.startPrank(attackerOwner);
         attacker = new DAOAttacker(address(dao));
@@ -59,7 +59,7 @@ contract TheDAOHackTest is Test {
         vm.stopPrank();
         
         assertLt(dao.getContractBalance(), 1 ether);
-        assertGt(attacker.getBalance(), 100 ether);
+        assertGt(attacker.getBalance(), 20 ether);
     }
     
 }

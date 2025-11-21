@@ -39,22 +39,22 @@ contract UpgradableContractTest is Test {
     }
     
     function testUpgradeToV2() public {
-        wrappedProxyV1.set(50);
-        assertEq(wrappedProxyV1.get(), 50);
-        
+        wrappedProxyV1.set(42);
+        assertEq(wrappedProxyV1.get(), 42);
+
         implementationV2 = new SimpleStorageV2();
         wrappedProxyV1.upgradeToAndCall(address(implementationV2), "");
         
         wrappedProxyV2 = SimpleStorageV2(address(proxy));
         
-        assertEq(wrappedProxyV2.get(), 50);
+        assertEq(wrappedProxyV2.get(), 42);
         
         wrappedProxyV2.increment();
-        assertEq(wrappedProxyV2.get(), 51);
+        assertEq(wrappedProxyV2.get(), 43);
         assertEq(wrappedProxyV2.getCounter(), 1);
         
         wrappedProxyV2.increment();
-        assertEq(wrappedProxyV2.get(), 52);
+        assertEq(wrappedProxyV2.get(), 44);
         assertEq(wrappedProxyV2.getCounter(), 2);
     }
     
@@ -65,7 +65,7 @@ contract UpgradableContractTest is Test {
         
         wrappedProxyV2.set(10);
         
-        vm.expectEmit(true, true, false, true);
+        vm.expectEmit();
         emit SimpleStorageV2.Incremented(11, address(this));
         wrappedProxyV2.increment();
     }

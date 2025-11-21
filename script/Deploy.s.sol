@@ -16,7 +16,7 @@ import "../src/06_TxOriginPhishing/VulnerableWallet.sol";
 import "../src/06_TxOriginPhishing/PhishingAttacker.sol";
 import "../src/07_WeakRandomness/VulnerableLottery.sol";
 import "../src/07_WeakRandomness/LotteryAttacker.sol";
-// import "../src/08_SecurityToken/SecurityToken.sol";
+import "../src/08_SecurityToken/SecurityToken.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol";
 
@@ -43,7 +43,7 @@ contract DeployAll is Script {
         deploy05_FlashLoanAttack();
         deploy06_TxOriginPhishing();
         deploy07_WeakRandomness();
-        // deploy08_SecurityToken();
+        deploy08_SecurityToken();
         
         vm.stopBroadcast();
     }
@@ -137,12 +137,16 @@ contract DeployAll is Script {
         console.log("LotteryAttacker deployed at:", address(attacker));
     }
     
-    // function deploy08_SecurityToken() internal {
-    //     console.log("\n=== 08. SecurityToken ===");
-    //     
-    //     SecurityToken token = new SecurityToken();
-    //     console.log("SecurityToken deployed at:", address(token));
-    // }
+    function deploy08_SecurityToken() internal {
+        console.log("\n=== 08. SecurityToken ===");
+        
+        SecurityToken token = new SecurityToken(
+            "Example Security Token",
+            "EST",
+            1000000 * 10**18
+        );
+        console.log("SecurityToken deployed at:", address(token));
+    }
 }
 
 contract Deploy01_SimpleStorage is Script {
@@ -270,15 +274,18 @@ contract Deploy07_WeakRandomness is Script {
     }
 }
 
-// contract Deploy08_SecurityToken is Script {
-//     function run() external {
-//         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
-//         vm.startBroadcast(deployerPrivateKey);
-//         
-//         SecurityToken token = new SecurityToken();
-//         console.log("SecurityToken deployed at:", address(token));
-//         
-//         vm.stopBroadcast();
-//     }
-// }
-
+contract Deploy08_SecurityToken is Script {
+    function run() external {
+        uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+        vm.startBroadcast(deployerPrivateKey);
+        
+        SecurityToken token = new SecurityToken(
+            "Example Security Token",
+            "EST",
+            1000000 * 10**18
+        );
+        console.log("SecurityToken deployed at:", address(token));
+        
+        vm.stopBroadcast();
+    }
+}

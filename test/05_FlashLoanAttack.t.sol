@@ -47,6 +47,7 @@ contract FlashLoanAttackTest is Test {
         pool.buyTokens{value: 1 ether}();
         
         assertGt(pool.tokenBalances(user), 0);
+        assertEq(token.balanceOf(user), 10 ether);
     }
     
     function testPoolSellTokens() public {

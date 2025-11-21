@@ -2,7 +2,7 @@
 pragma solidity ^0.8.20;
 
 contract SimpleStorage {
-    uint256 private storedData;
+    uint256 public storedData;
     
     event DataStored(uint256 indexed data, address indexed setter);
     

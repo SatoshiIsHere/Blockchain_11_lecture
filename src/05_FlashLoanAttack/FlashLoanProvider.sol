@@ -19,14 +19,9 @@ contract FlashLoanProvider {
     
     function flashLoan(uint256 amount, bytes calldata params) external {
         uint256 balanceBefore = token.balanceOf(address(this));
-        require(balanceBefore >= amount, "Not enough liquidity");
-        
-        uint256 fee = (amount * FEE_PERCENTAGE) / 100;
-        
-        require(token.transfer(msg.sender, amount), "Transfer failed");
-        
+        uint256 fee = (amount * FEE_PERCENTAGE) / 100;        
         IFlashLoanReceiver(msg.sender).executeOperation(amount, fee, params);
-        
+
         uint256 balanceAfter = token.balanceOf(address(this));
         require(balanceAfter >= balanceBefore + fee, "Flash loan not repaid");
         

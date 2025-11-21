@@ -25,9 +25,7 @@ contract FlashLoanAttacker is IFlashLoanReceiver {
         flashLoanProvider.flashLoan(loanAmount, "");
     }
     
-    function executeOperation(uint256 amount, uint256 fee, bytes calldata) external override {
-        require(msg.sender == address(flashLoanProvider), "Only flash loan provider");
-        
+    function executeOperation(uint256 amount, uint256 fee, bytes calldata) external override {        
         console.log("[2] Received flash loan:", amount);
         console.log("    Price before:", pool.getPrice());
         

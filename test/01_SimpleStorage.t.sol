@@ -2,6 +2,7 @@
 pragma solidity ^0.8.20;
 
 import "forge-std/Test.sol";
+import "forge-std/console.sol";
 import "../src/01_SimpleStorage/SimpleStorage.sol";
 
 contract SimpleStorageTest is Test {
@@ -21,7 +22,7 @@ contract SimpleStorageTest is Test {
     }
     
     function testSetEmitsEvent() public {
-        vm.expectEmit(true, true, false, true);
+        vm.expectEmit();
         emit SimpleStorage.DataStored(100, address(this));
         simpleStorage.set(100);
     }
@@ -37,6 +38,7 @@ contract SimpleStorageTest is Test {
     }
     
     function testFuzz_SetValue(uint256 value) public {
+        console.log(value);
         simpleStorage.set(value);
         assertEq(simpleStorage.get(), value);
     }

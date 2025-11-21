@@ -8,6 +8,10 @@ contract SimpleStorageV1 is UUPSUpgradeable, OwnableUpgradeable {
     uint256 private storedData;
     
     event DataStored(uint256 indexed data, address indexed setter);
+
+    // constructor() {
+    //     __Ownable_init(msg.sender);
+    // }
     
     function initialize() public initializer {
         __Ownable_init(msg.sender);
