@@ -8,3 +8,17 @@ git submodule update --init --recursive
 forge --version
 cast --version
 ```
+
+1번. SimpleStorage 배포 및 테스트
+
+```bash
+forge script script/Deploy.s.sol:Deploy01_SimpleStorage --rpc-url http://localhost:8545 --broadcast
+export CONTRACT=0x5fbdb2315678afecb367f032d93f642f64180aa3
+cast send $CONTRACT "set(uint256)" 40 --rpc-url http://localhost:8545 --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+cast call $CONTRACT "get()" --rpc-url http://localhost:8545
+cast --to-dec $(cast call $CONTRACT "get()" --rpc-url http://localhost:8545)
+```
+
+8 2 * 16 = 32
+
+32 + 8 = 40

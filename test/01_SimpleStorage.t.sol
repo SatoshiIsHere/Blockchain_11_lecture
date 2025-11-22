@@ -38,7 +38,7 @@ contract SimpleStorageTest is Test {
     }
     
     function testFuzz_SetValue(uint256 value) public {
-        console.log(value);
+        console.log("asdasdasdasdasdasd", value);
         simpleStorage.set(value);
         assertEq(simpleStorage.get(), value);
     }
