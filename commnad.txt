@@ -10,11 +10,24 @@ cast --version
 ```
 
 1번. SimpleStorage 배포 및 테스트
- ㄷ ㄷ
 ```bash
 forge script script/Deploy.s.sol:Deploy01_SimpleStorage --rpc-url http://localhost:8545 --broadcast
 export CONTRACT=0x5fbdb2315678afecb367f032d93f642f64180aa3
 cast send $CONTRACT "set(uint256)" 40 --rpc-url http://localhost:8545 --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
 cast call $CONTRACT "get()" --rpc-url http://localhost:8545
 cast --to-dec $(cast call $CONTRACT "get()" --rpc-url http://localhost:8545)
+```
+
+2번. UUPS Proxy 배포 및 업그레이드 테스트
+```bash
+forge script script/DeployUpgradeable.s.sol:DeployV1 --rpc-url http://localhost:8545 --broadcast
+export PROXY=0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
+cast send $PROXY "set(uint256)" 42 --rpc-url http://localhost:8545 --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+cast call $PROXY "get()" --rpc-url http://localhost:8545
+sed -i '' "s|PROXY_ADDRESS=.*|PROXY_ADDRESS=$PROXY|" .env || echo "PROXY_ADDRESS=$PROXY" >> .env
+forge script script/DeployUpgradeable.s.sol:UpgradeToV2 --rpc-url http://localhost:8545 --broadcast
+cast call $PROXY "get()" --rpc-url http://localhost:8545
+cast send $PROXY "increment()" --rpc-url http://localhost:8545 --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+cast call $PROXY "get()" --rpc-url http://localhost:8545
+cast call $PROXY "getCounter()" --rpc-url http://localhost:8545
 ```

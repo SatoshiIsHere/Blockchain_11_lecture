@@ -25,7 +25,7 @@ contract SimpleStorageSolutionTest is Test {
     function testIncrementEmitsEvent() public {
         simpleStorage.set(5);
         
-        vm.expectEmit(true, true, false, true);
+        vm.expectEmit();
         emit SimpleStorage_Solution.DataStored(6, address(this));
         simpleStorage.increment();
     }

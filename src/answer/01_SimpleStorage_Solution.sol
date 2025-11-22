@@ -19,5 +19,10 @@ contract SimpleStorage_Solution {
         storedData += 1;
         emit DataStored(storedData, msg.sender);
     }
+
+    function decrement() public {
+        storedData -= 1;
+        emit DataStored(storedData, msg.sender);
+    }
 }
 
