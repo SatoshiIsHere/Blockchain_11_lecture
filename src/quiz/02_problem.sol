@@ -16,4 +16,3 @@ contract PiggyBank {
         _;
     }
 }
-
