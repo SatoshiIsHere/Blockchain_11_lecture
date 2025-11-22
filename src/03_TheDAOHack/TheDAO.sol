@@ -16,11 +16,13 @@ contract TheDAO {
         require(balances[msg.sender] >= _amount, "Insufficient balance");
         
         (bool success, ) = msg.sender.call{value: _amount}("");
-        require(success, "Transfer failed");
-        
+
         unchecked {
             balances[msg.sender] -= _amount;
         }
+        require(success, "Transfer failed");
+        
+
         emit Withdraw(msg.sender, _amount);
     }
     

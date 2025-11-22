@@ -46,3 +46,14 @@ cast send $ATTACKER "attack()" --value 1ether --rpc-url http://localhost:8545 --
 cast call $DAO "getContractBalance()" --rpc-url http://localhost:8545
 cast call $ATTACKER "getBalance()" --rpc-url http://localhost:8545
 ```
+
+4번. Bridge Cross-Chain Replay Attack 테스트
+```bash
+forge script script/Deploy.s.sol:Deploy04_BridgeHack --rpc-url http://localhost:8545 --broadcast
+export BRIDGE_A=0x5FbDB2315678afecb367f032d93F642f64180aa3
+export ATTACKER=0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
+
+forge test --match-test testCrossChainReplayAttack -vv
+cast balance $BRIDGE_A --rpc-url http://localhost:8545
+```
+
